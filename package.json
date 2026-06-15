@@ -1,0 +1,37 @@
+{
+  "name": "rng-kit",
+  "version": "0.1.0",
+  "description": "Random and pseudo-random number generation lib.",
+  "main": "lib/rngKit.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "scripts": {
+    "test": "tea-time -R dot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cronvel/rng-kit.git"
+  },
+  "keywords": [
+    "random",
+    "rng",
+    "prng"
+  ],
+  "author": "Cédric Ronvel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cronvel/rng-kit/issues"
+  },
+  "copyright": {
+    "title": "RNG Kit",
+    "years": [
+      2026
+    ],
+    "owner": "Cédric Ronvel"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  }
+}
