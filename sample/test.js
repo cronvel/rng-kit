@@ -3,15 +3,38 @@
 
 const rngKit = require( '..' ) ;
 
+const CLASS_FOR_TYPE_NAME = {
+	native: rngKit.Native ,
+	pcg: rngKit.PCG32 ,
+	pcg32: rngKit.PCG32 ,
+	mersenne: rngKit.MersenneTwister ,
+	mersennetwister: rngKit.MersenneTwister ,
+	"mersenne-twister": rngKit.MersenneTwister ,
+	entropy: rngKit.Entropy ,
+	pseudoentropy: rngKit.PseudoEntropy ,
+	"pseudo-entropy": rngKit.PseudoEntropy ,
+} ;
+
+const type = process.argv[ 2 ] ;
+const seed = process.argv[ 3 ] ? + process.argv[ 3 ] : null ;
+const RngClass = type ? CLASS_FOR_TYPE_NAME[ type ] : rngKit.Native ;
+
+if ( ! RngClass ) {
+	throw new Error( "Bad type: " + type ) ;
+}
+
 function logStat( name , occurence , total ) {
 	const percent = Math.floor( occurence / total * 10000 ) / 100 ;
 	console.log( '' + name +': ' + percent + '%' ) ;
 }
 
 function run() {
-	//const rng = new rngKit.MersenneTwister() ;
-	const rng = new rngKit.PCG32() ;
-	rng.autoSeed() ;
+	console.log( "RNG:" , RngClass.name , "Seed:" , seed ) ;
+	const rng = new RngClass() ;
+
+	if ( seed === null ) { rng.autoSeed() ; }
+	else { rng.setSeed( seed ) ; }
+
 	console.log( "RNG:" , rng ) ;
 
 	const max = 10000 ;
