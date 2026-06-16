@@ -35,13 +35,14 @@ function logStat( name , occurence , total ) {
 	console.log( '' + name +': ' + percent + '%' ) ;
 }
 
-function run() {
-	const rng = new RngClass() ;
-	console.log( "RNG init:" , RngClass.name , "Seed:" , seed , "Channel seed:" , channelSeed ) ;
-	console.log( "RNG object:" , rng ) ;
+const rng = new RngClass() ;
+console.log( "RNG init:" , RngClass.name , "Seed:" , seed , "Channel seed:" , channelSeed ) ;
 
-	if ( seed === null ) { rng.autoSeed() ; }
-	else { rng.setSeed( seed , channelSeed ) ; }
+if ( seed === null ) { rng.autoSeed() ; }
+else { rng.setSeed( seed , undefined , channelSeed ) ; }
+
+function run() {
+	console.log( "RNG object:" , rng ) ;
 
 	const max = 10000 ;
 
@@ -66,5 +67,67 @@ function run() {
 	console.log( "RNG object:" , rng ) ;
 }
 
-run() ;
+function run2() {
+	console.log( "RNG object:" , rng ) ;
+
+	const max = 10 ;
+
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.randomFloat() ;
+		console.log( 'float #' + i + ':' , v ) ;
+	}
+
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.randomInt( 100 ) ;
+		console.log( 'int #' + i + ':' , v ) ;
+	}
+
+	console.log( "RNG object:" , rng ) ;
+}
+
+function run3() {
+	console.log( "RNG object:" , rng ) ;
+
+	const max = 5 ;
+
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.randomInt( 100 ) ;
+		console.log( 'master int #' + i + ':' , v ) ;
+	}
+
+	let newChannel = 'loot' ;
+
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.channel( newChannel ).randomInt( 100 ) ;
+		console.log( '1st channel int #' + i + ':' , v ) ;
+	}
+
+	console.log( "1st Child RNG object:" , rng.channel( newChannel ) ) ;
+
+	newChannel = [ 'loot' , 'user_1234' ] ;
+
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.channel( newChannel ).randomInt( 100 ) ;
+		console.log( '2nd channel int #' + i + ':' , v ) ;
+	}
+
+	console.log( "2nd Child RNG object:" , rng.channel( newChannel ) ) ;
+
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.channel( newChannel ).channel( newChannel ).randomInt( 100 ) ;
+		console.log( '2nd channel² int #' + i + ':' , v ) ;
+	}
+
+	console.log( "2nd Child² RNG object:" , rng.channel( newChannel ).channel( newChannel ) ) ;
+
+	if ( rng.channel( newChannel ) !== rng.channel( newChannel ) ) {
+		console.error( "Bad channel sibling" ) ;
+	}
+
+	if ( rng.channel( newChannel ) !== rng.channel( newChannel ).channel( newChannel ) ) {
+		console.error( "Bad channel parenting" ) ;
+	}
+}
+
+run3() ;
 
