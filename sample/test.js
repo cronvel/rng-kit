@@ -16,7 +16,8 @@ const CLASS_FOR_TYPE_NAME = {
 } ;
 
 const type = process.argv[ 2 ] ;
-const seed = process.argv[ 3 ] ? + process.argv[ 3 ] : null ;
+const seed = process.argv[ 3 ] ? process.argv[ 3 ] : null ;
+const channelSeed = process.argv[ 4 ] ? process.argv[ 4 ] : null ;
 const RngClass = type ? CLASS_FOR_TYPE_NAME[ type ] : rngKit.Native ;
 
 if ( ! RngClass ) {
@@ -29,13 +30,12 @@ function logStat( name , occurence , total ) {
 }
 
 function run() {
-	console.log( "RNG:" , RngClass.name , "Seed:" , seed ) ;
 	const rng = new RngClass() ;
+	console.log( "RNG init:" , RngClass.name , "Seed:" , seed , "Channel seed:" , channelSeed ) ;
+	console.log( "RNG object:" , rng ) ;
 
 	if ( seed === null ) { rng.autoSeed() ; }
-	else { rng.setSeed( seed ) ; }
-
-	console.log( "RNG:" , rng ) ;
+	else { rng.setSeed( seed , channelSeed ) ; }
 
 	const max = 10000 ;
 
@@ -57,7 +57,7 @@ function run() {
 	logStat( "< 0.5" , lowerCount , max ) ;
 	logStat( "≥ 0.99" , topCount , max ) ;
 	logStat( "< 0.01" , bottomCount , max ) ;
-	//console.log( "RNG:" , rng ) ;
+	console.log( "RNG object:" , rng ) ;
 }
 
 run() ;
