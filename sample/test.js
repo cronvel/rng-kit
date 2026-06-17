@@ -5,14 +5,14 @@ const rngKit = require( '..' ) ;
 
 const CLASS_FOR_TYPE_NAME = {
 	native: rngKit.Native ,
-	pcg: rngKit.PCG32 ,
-	pcg32: rngKit.PCG32 ,
-	sha256prng: rngKit.SHA256Prng ,
-	"sha256-prng": rngKit.SHA256Prng ,
-	"sha-256-prng": rngKit.SHA256Prng ,
-	sha256: rngKit.SHA256Prng ,
-	"sha-256": rngKit.SHA256Prng ,
-	sha: rngKit.SHA256Prng ,
+	pcg: rngKit.Pcg32 ,
+	pcg32: rngKit.Pcg32 ,
+	sha256prng: rngKit.Sha256Prng ,
+	"sha256-prng": rngKit.Sha256Prng ,
+	"sha-256-prng": rngKit.Sha256Prng ,
+	sha256: rngKit.Sha256Prng ,
+	"sha-256": rngKit.Sha256Prng ,
+	sha: rngKit.Sha256Prng ,
 	mersenne: rngKit.MersenneTwister ,
 	mersennetwister: rngKit.MersenneTwister ,
 	"mersenne-twister": rngKit.MersenneTwister ,
@@ -82,6 +82,12 @@ function run2() {
 		console.log( 'int #' + i + ':' , v ) ;
 	}
 
+	for ( let i = 0 ; i < max ; i ++ ) {
+		//let v = rng.randomString( 4 , 4 ) ;
+		let v = rng.randomString( 4 , 4 , '-' , rngKit.CHARSET.BASE36 ) ;
+		console.log( 'string #' + i + ':' , v ) ;
+	}
+
 	console.log( "RNG object:" , rng ) ;
 }
 
@@ -129,5 +135,5 @@ function run3() {
 	}
 }
 
-run3() ;
+run2() ;
 
