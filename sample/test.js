@@ -16,9 +16,9 @@ const CLASS_FOR_TYPE_NAME = {
 	mersenne: rngKit.MersenneTwister ,
 	mersennetwister: rngKit.MersenneTwister ,
 	"mersenne-twister": rngKit.MersenneTwister ,
-	entropy: rngKit.Entropy ,
-	pseudoentropy: rngKit.PseudoEntropy ,
-	"pseudo-entropy": rngKit.PseudoEntropy ,
+	cryptorng: rngKit.CryptoRng ,
+	"crypto-rng": rngKit.CryptoRng ,
+	crypto: rngKit.CryptoRng
 } ;
 
 const type = process.argv[ 2 ] ;
@@ -41,7 +41,7 @@ console.log( "RNG init:" , RngClass.name , "Seed:" , seed , "Channel seed:" , ch
 if ( seed === null ) { rng.autoSeed() ; }
 else { rng.setSeed( seed , undefined , channelSeed ) ; }
 
-function run() {
+function run1() {
 	console.log( "RNG object:" , rng ) ;
 
 	const max = 10000 ;
