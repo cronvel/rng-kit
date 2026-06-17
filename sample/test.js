@@ -41,6 +41,8 @@ console.log( "RNG init:" , RngClass.name , "Seed:" , seed , "Channel seed:" , ch
 if ( seed === null ) { rng.autoSeed() ; }
 else { rng.setSeed( seed , undefined , channelSeed ) ; }
 
+
+
 function run1() {
 	console.log( "RNG object:" , rng ) ;
 
@@ -135,5 +137,35 @@ function run3() {
 	}
 }
 
-run2() ;
+function run4() {
+	console.log( "RNG object:" , rng ) ;
+
+	const max = 10 ;
+	const chance = 0.7 ;
+	rng.setFeedback( 1 ) ;
+
+	console.log() ;
+
+	let success = 0 ;
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.randomTrial( chance ) ;
+		if ( v ) { success ++ ; }
+		console.log( 'unbiased #' + i + ':' , v ) ;
+	}
+	logStat( "unbiased success" , success , max ) ;
+	console.log() ;
+
+	success = 0 ;
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.pseudoRandomTrial( chance ) ;
+		if ( v ) { success ++ ; }
+		console.log( 'biased #' + i + ':' , v ) ;
+	}
+	logStat( "biased success" , success , max ) ;
+	console.log() ;
+
+	console.log( "RNG object:" , rng ) ;
+}
+
+run4() ;
 
