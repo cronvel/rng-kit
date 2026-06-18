@@ -155,6 +155,8 @@ function run4() {
 	logStat( "unbiased success" , success , max ) ;
 	console.log() ;
 
+	rng.reset() ;
+	console.log( "RNG is reset" ) ;
 	success = 0 ;
 	for ( let i = 0 ; i < max ; i ++ ) {
 		let v = rng.pseudoRandomTrial( chance ) ;
@@ -167,5 +169,34 @@ function run4() {
 	console.log( "RNG object:" , rng ) ;
 }
 
-run4() ;
+async function run5() {
+	const readline = require('node:readline/promises');
+	const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+
+	console.log( "RNG object:" , rng ) ;
+
+	const chance = 0.7 ;
+	rng.setFeedback( 1 ) ;
+
+	console.log() ;
+
+	let success = 0 ;
+	let i ;
+	for ( i = 0 ;; i ++ ) {
+		console.log( '#' + i + ') Bias:' , rng.bias ) ;
+		let answer = await rl.question( "Chance in % ? " ) ;
+		if ( ! answer ) { break ; }
+		let chance = ( + answer || 0 ) / 100 ;
+		let v = rng.pseudoRandomTrial( chance ) ;
+		if ( v ) { success ++ ; }
+		console.log( v ? "Success!" : "Failure..." ) ;
+	}
+	logStat( "biased success" , success , i ) ;
+	console.log() ;
+
+	console.log( "RNG object:" , rng ) ;
+	process.exit() ;
+}
+
+run5() ;
 
