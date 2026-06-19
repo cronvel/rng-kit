@@ -206,5 +206,19 @@ async function run5() {
 	process.exit() ;
 }
 
-run2() ;
+function run6() {
+	console.log( "RNG object:" , rng ) ;
+
+	const array = [ 'Alice' , 'Bob' , 'Charlie' , 'Denise' , 'Eve' , 'Fabiano' , 'Georges' , 'Hugo' , 'Irma' , 'Julian' ] ;
+	const max = 1 ;
+
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let sample = rng.sample( array , 3 ) ;
+		console.log( 'sample #' + i + ':' , sample ) ;
+	}
+
+	console.log( "RNG object:" , rng ) ;
+}
+
+run6() ;
 
