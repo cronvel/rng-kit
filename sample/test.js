@@ -91,6 +91,11 @@ function run2() {
 		console.log( 'string #' + i + ':' , v ) ;
 	}
 
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.randomLogNormal( 10 ) ;
+		console.log( 'normal #' + i + ':' , v ) ;
+	}
+
 	console.log( "RNG object:" , rng ) ;
 }
 
