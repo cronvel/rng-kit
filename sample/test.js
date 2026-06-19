@@ -92,8 +92,10 @@ function run2() {
 	}
 
 	for ( let i = 0 ; i < max ; i ++ ) {
-		let v = rng.randomLogNormal( 10 ) ;
-		console.log( 'normal #' + i + ':' , v ) ;
+		let baseValue = 100 ;
+		let multiplicator = 1.2 ;
+		let v = rng.randomLogNormal( baseValue , multiplicator ) ;
+		console.log( 'log normal (baseValue=' + baseValue + ', multiplicator=' + multiplicator + ') #' + i + ':' , v ) ;
 	}
 
 	console.log( "RNG object:" , rng ) ;
