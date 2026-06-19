@@ -86,7 +86,8 @@ function run2() {
 
 	for ( let i = 0 ; i < max ; i ++ ) {
 		//let v = rng.randomString( 4 , 4 ) ;
-		let v = rng.randomString( 4 , 4 , '-' , rngKit.CHARSET.BASE36 ) ;
+		//let v = rng.randomString( 4 , 4 , '-' , rngKit.CHARSET.BASE36 ) ;
+		let v = rng.randomString( 4 , 4 , '-' , rngKit.CHARSET.UPPERCASE_ALPHANUMERIC ) ;
 		console.log( 'string #' + i + ':' , v ) ;
 	}
 
@@ -198,5 +199,5 @@ async function run5() {
 	process.exit() ;
 }
 
-run5() ;
+run2() ;
 
