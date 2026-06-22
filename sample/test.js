@@ -98,6 +98,14 @@ function run2() {
 		console.log( 'log normal (baseValue=' + baseValue + ', multiplicator=' + multiplicator + ') #' + i + ':' , v ) ;
 	}
 
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let baseValue = 10 ;
+		//let v = rng.randomTriangular( 80 , baseValue , 200 ) ;
+		//let v = rng.randomExponential( baseValue ) ;
+		let v = rng.randomPoisson( baseValue ) ;
+		console.log( 'special distribution (baseValue=' + baseValue + ') #' + i + ':' , v ) ;
+	}
+
 	console.log( "RNG object:" , rng ) ;
 }
 
@@ -235,5 +243,5 @@ function run6() {
 	console.log( "RNG object:" , rng ) ;
 }
 
-run6() ;
+run2() ;
 
