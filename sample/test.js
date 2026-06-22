@@ -209,11 +209,26 @@ async function run5() {
 function run6() {
 	console.log( "RNG object:" , rng ) ;
 
-	const array = [ 'Alice' , 'Bob' , 'Charlie' , 'Denise' , 'Eve' , 'Fabiano' , 'Georges' , 'Hugo' , 'Irma' , 'Julian' ] ;
+	const arrayOfObjects = [
+		{ name: 'Alice' , w: 1.2 } ,
+		{ name: 'Bob' , w: 4.5 } ,
+		{ name: 'Charlie' , w: 1.4 } ,
+		{ name: 'Denise' , w: 0.2 } ,
+		{ name: 'Eve' , w: 0.7 } ,
+		{ name: 'Fabiano' , w: 0.1 } ,
+		{ name: 'Georges' , w: 0.15 } ,
+		{ name: 'Hugo' , w: 0.05 } ,
+		{ name: 'Irma' , w: 0.02 } ,
+		{ name: 'Julian' , w: 0.08 }
+	] ;
+	const array = arrayOfObjects.map( o => o.name ) ;
+	const weights = arrayOfObjects.map( o => o.w ) ;
 	const max = 1 ;
 
 	for ( let i = 0 ; i < max ; i ++ ) {
-		let sample = rng.sample( array , 3 ) ;
+		//let sample = rng.sample( array , 3 ) ;
+		//let sample = rng.weightedSample( array , weights , 3 ) ;
+		let sample = rng.weightedSample( arrayOfObjects , 'w' , 3 ) ;
 		console.log( 'sample #' + i + ':' , sample ) ;
 	}
 
