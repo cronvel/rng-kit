@@ -46,6 +46,8 @@ module.exports = {
 		'prefer-rest-params': 'warn' ,
 		'no-control-regex': 'off' ,	// because thing like \x00 are considered like a control even if escaped...
 		'no-fallthrough': 'off' ,
+		'no-var': 'warn' ,
+		'prefer-const': 'warn' ,
 		'no-empty': [ 'error' , {
 			'allowEmptyCatch': true
 		} ] ,
@@ -83,7 +85,7 @@ module.exports = {
 			'words': true ,
 			'nonwords': true ,
 			'overrides': {
-				//'-': false ,
+				//'-': false
 			}
 		} ] ,
 		'space-in-parens': [ 'error' , 'always' , {

@@ -232,6 +232,13 @@ function run6() {
 	const array = arrayOfObjects.map( o => o.name ) ;
 	const weights = arrayOfObjects.map( o => o.w ) ;
 	const max = 1 ;
+	
+	/*
+	//let sample = rng.sampleAndRemove( arrayOfObjects , 3 ) ;
+	let sample = rng.weightedSampleAndRemove( arrayOfObjects , 'w' , 3 ) ;
+	console.log( "sample:" , sample , "arrayOfObjects:" , arrayOfObjects ) ;
+	return ;
+	*/
 
 	for ( let i = 0 ; i < max ; i ++ ) {
 		//let sample = rng.sample( array , 3 ) ;
@@ -243,5 +250,5 @@ function run6() {
 	console.log( "RNG object:" , rng ) ;
 }
 
-run2() ;
+run6() ;
 

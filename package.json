@@ -1,12 +1,14 @@
 {
   "name": "rng-kit",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Random and pseudo-random number generation lib.",
   "main": "lib/rngKit.js",
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "array-kit": "^0.2.8"
+  },
   "scripts": {
     "test": "tea-time -R dot"
   },
