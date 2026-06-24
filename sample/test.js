@@ -250,5 +250,46 @@ function run6() {
 	console.log( "RNG object:" , rng ) ;
 }
 
-run6() ;
+// getState() / setState()
+function run7() {
+	console.log( "RNG object:" , rng ) ;
+
+	const max = 5 ;
+	let newChannel = [ 'loot' , 'user_1234' ] ;
+
+	console.log() ;
+
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.randomInt( 100 ) ;
+		console.log( 'int #' + i + ':' , v ) ;
+		let channelV = rng.channel( newChannel ).randomInt( 100 ) ;
+		console.log( 'channel int #' + i + ':' , channelV ) ;
+	}
+
+	console.log() ;
+	let state = rng.getState() ;
+	//console.log( "state:" , state , state.children[ 0 ] ) ;
+
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.randomInt( 100 ) ;
+		console.log( 'int #' + i + ':' , v ) ;
+		let channelV = rng.channel( newChannel ).randomInt( 100 ) ;
+		console.log( 'channel int #' + i + ':' , channelV ) ;
+	}
+
+	console.log() ;
+	rng.setState( state ) ;
+
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.randomInt( 100 ) ;
+		console.log( 'int #' + i + ':' , v ) ;
+		let channelV = rng.channel( newChannel ).randomInt( 100 ) ;
+		console.log( 'channel int #' + i + ':' , channelV ) ;
+	}
+
+	console.log() ;
+	console.log( "RNG object:" , rng ) ;
+}
+
+run7() ;
 
