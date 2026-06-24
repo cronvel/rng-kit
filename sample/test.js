@@ -5,6 +5,7 @@ const rngKit = require( '..' ) ;
 
 const CLASS_FOR_TYPE_NAME = {
 	native: rngKit.Native ,
+	lcg: rngKit.Lcg ,
 	pcg: rngKit.Pcg32 ,
 	pcg32: rngKit.Pcg32 ,
 	sha256prng: rngKit.Sha256Prng ,
