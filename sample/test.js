@@ -298,5 +298,18 @@ function run7() {
 	console.log( "RNG object:" , rng ) ;
 }
 
-run1() ;
+function run8() {
+	console.log( "RNG object:" , rng ) ;
+
+	const max = 10 ;
+
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.randomBytes( 6 ) ;
+		console.log( 'bytes #' + i + ':' , v ) ;
+	}
+
+	console.log( "RNG object:" , rng ) ;
+}
+
+run8() ;
 
