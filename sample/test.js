@@ -52,7 +52,9 @@ function run1() {
 	let upperCount = 0 ,
 		lowerCount = 0 ,
 		topCount = 0 ,
-		bottomCount = 0 ;
+		bottomCount = 0 ,
+		tooBigCount = 0 ,
+		negativeCount = 0 ;
 
 	for ( let i = 0 ; i < max ; i ++ ) {
 		let v = rng.randomFloat() ;
@@ -60,6 +62,8 @@ function run1() {
 		if ( v < 0.5 ) { lowerCount ++ ; }
 		if ( v >= 0.99 ) { topCount ++ ; }
 		if ( v < 0.01 ) { bottomCount ++ ; }
+		if ( v >= 1 ) { tooBigCount ++ ; }
+		if ( v < 0 ) { negativeCount ++ ; }
 		//console.log( '#' + i + ':' , v ) ;
 	}
 
@@ -67,6 +71,8 @@ function run1() {
 	logStat( "< 0.5" , lowerCount , max ) ;
 	logStat( "≥ 0.99" , topCount , max ) ;
 	logStat( "< 0.01" , bottomCount , max ) ;
+	console.log( "≥ 1 (error):" , tooBigCount ) ;
+	console.log( "< 0 (error):" , negativeCount ) ;
 	console.log( "RNG object:" , rng ) ;
 }
 
@@ -292,5 +298,5 @@ function run7() {
 	console.log( "RNG object:" , rng ) ;
 }
 
-run7() ;
+run1() ;
 
