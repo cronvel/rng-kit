@@ -303,10 +303,19 @@ function run8() {
 
 	const max = 10 ;
 
+	//*
 	for ( let i = 0 ; i < max ; i ++ ) {
-		let v = rng.randomBytes( 6 ) ;
+		let v = rng.randomUInt32() ;
+		console.log( 'uint32 #' + i + ':' , v ) ;
+	}
+	//*/
+
+	//*
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.randomBytes( 4 ) ;
 		console.log( 'bytes #' + i + ':' , v ) ;
 	}
+	//*/
 
 	console.log( "RNG object:" , rng ) ;
 }
