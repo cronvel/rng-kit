@@ -1,6 +1,6 @@
 {
   "name": "rng-kit",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "Random and pseudo-random number generation lib.",
   "main": "lib/rngKit.js",
   "directories": {

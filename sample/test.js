@@ -8,6 +8,9 @@ const CLASS_FOR_TYPE_NAME = {
 	lcg: rngKit.Lcg ,
 	pcg: rngKit.Pcg32 ,
 	pcg32: rngKit.Pcg32 ,
+	xoshiro256ss: rngKit.Xoshiro256ss ,
+	xoshiro256: rngKit.Xoshiro256ss ,
+	xoshiro: rngKit.Xoshiro256ss ,
 	sha256prng: rngKit.Sha256Prng ,
 	"sha256-prng": rngKit.Sha256Prng ,
 	"sha-256-prng": rngKit.Sha256Prng ,
@@ -320,5 +323,5 @@ function run8() {
 	console.log( "RNG object:" , rng ) ;
 }
 
-run8() ;
+run7() ;
 
