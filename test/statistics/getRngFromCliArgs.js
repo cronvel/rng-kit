@@ -1,6 +1,6 @@
 "use strict" ;
 
-const rngKit = require( '..' ) ;
+const rngKit = require( '../..' ) ;
 
 const CLASS_FOR_TYPE_NAME = {
 	native: rngKit.Native ,

@@ -4,20 +4,23 @@
 const BaseTest = require( './BaseTest.js' ) ;
 
 const logger = require( './logger.js' ) ;
-const stat = require( '../lib/stat.js' ) ;
+const stat = require( '../../lib/stat.js' ) ;
 
 
 
-function Uniformity( rng ) {
+function Uniformity( rng , params = {} ) {
 	BaseTest.call( this , rng ) ;
-	this.buckets = 256 ;
-	this.samples = 1_000_000 ;
+	this.samples = params.samples ?? 1_000_000 ;
+	this.buckets = params.buckets ?? 256 ;
 }
 
-Uniformity.prototype = Object.create( Uniformity.prototype ) ;
+Uniformity.prototype = Object.create( BaseTest.prototype ) ;
 Uniformity.prototype.constructor = Uniformity ;
 
 module.exports = Uniformity ;
+
+Uniformity.prototype.testName = 'Uniformity test' ;
+Uniformity.prototype.description = 'Measure the deviation from the expected occurence of each integers (χ²)' ;
 
 
 
@@ -40,22 +43,23 @@ Uniformity.prototype.run = function() {
 	for ( let i = 0 ; i < this.buckets ; i ++ ) {
 		const errorSquared = ( ( bucketsCounter[ i ] - expected ) ** 2 ) / expected ;
 		chiSquared += errorSquared ;
-		//logger.log( "Error for #%i:\t%[.2]f\t%i / %i" , i , errorSquared , bucketsCounter[ i ] , expected ) ;
+		//logger.log( "Error for #%i:\t%[.2]f\t%i / %[.2]f" , i , errorSquared , bucketsCounter[ i ] , expected ) ;
 	}
 
 	const zScore = BaseTest.zScore( chiSquared , expectedChiSquared , sigmaChiSquared ) ;
 	const pValue = BaseTest.zScoreToPValue( zScore ) ;
 
 	const duration = Date.now() - startTime ;
-
-	logger.log( "\n== Uniformity test ==" ) ;
-	logger.log( "Duration: %[.3!a]t" , duration ) ;
-	logger.log( "Samples: %k" , this.samples ) ;
-	logger.log( "Buckets: %i" , this.buckets ) ;
-	logger.log( "χ²: %[.2]f" , chiSquared ) ;
-	logger.log( "Expected χ²: %[.2]f" , expectedChiSquared ) ;
-	logger.log( "Std-dev: %[.2]f" , sigmaChiSquared ) ;
-	logger.log( "Z-score: %[+.2]fσ " , zScore ) ;
-	logger.log( "P-value: %[5]f " , pValue ) ;
+	
+	this.displayResults( {
+		duration ,
+		extra: [ 'buckets' ] ,
+		measureOf: "χ²" ,
+		actual: chiSquared ,
+		expected: expectedChiSquared ,
+		stdDev: sigmaChiSquared ,
+		zScore ,
+		pValue
+	} ) ;
 } ;
 

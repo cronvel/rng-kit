@@ -2,7 +2,7 @@
 "use strict" ;
 
 const rngKit = require( '..' ) ;
-const rng = require( './getRngFromCliArgs.js' ) ;
+const rng = require( '../test/statistics/getRngFromCliArgs.js' ) ;
 
 function logStat( name , occurence , total ) {
 	const percent = Math.floor( occurence / total * 10000 ) / 100 ;

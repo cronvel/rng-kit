@@ -4,21 +4,24 @@
 const BaseTest = require( './BaseTest.js' ) ;
 
 const logger = require( './logger.js' ) ;
-const stat = require( '../lib/stat.js' ) ;
+const stat = require( '../../lib/stat.js' ) ;
 
 
 
-function BirthdaySpacings( rng ) {
+function BirthdaySpacings( rng , params = {} ) {
 	BaseTest.call( this , rng ) ;
-	this.interval = 1_000_000 ;
-	this.samples = 400 ;
-	this.batches = 100 ;
+	this.batches = params.batches ?? 100 ;
+	this.samples = params.samples ?? 400 ;
+	this.interval = params.interval ?? 1_000_000 ;
 }
 
-BirthdaySpacings.prototype = Object.create( BirthdaySpacings.prototype ) ;
+BirthdaySpacings.prototype = Object.create( BaseTest.prototype ) ;
 BirthdaySpacings.prototype.constructor = BirthdaySpacings ;
 
 module.exports = BirthdaySpacings ;
+
+BirthdaySpacings.prototype.testName = 'Birthday Spacings test' ;
+BirthdaySpacings.prototype.description = 'Measure the number of duplicated spacings (λ)' ;
 
 
 
@@ -55,15 +58,15 @@ BirthdaySpacings.prototype.run = function() {
 
 	const duration = Date.now() - startTime ;
 
-	logger.log( "\n== BirthdaySpacings test ==" ) ;
-	logger.log( "Duration: %[.3!a]t" , duration ) ;
-	logger.log( "Batches: %k" , this.batches ) ;
-	logger.log( "Samples: %k" , this.samples ) ;
-	logger.log( "Interval: %i" , this.interval ) ;
-	logger.log( "Duplicated spacings: %i" , duplicatedSpacings ) ;
-	logger.log( "λ (expected duplicated spacings): %f" , expectedDuplicatedSpacings ) ;
-	logger.log( "Std-dev: %[.2]f" , sigmaDuplicatedSpacings ) ;
-	logger.log( "Z-score: %[+.2]fσ " , zScore ) ;
-	logger.log( "P-value: %[5]f " , pValue ) ;
+	this.displayResults( {
+		duration ,
+		extra: [ 'interval' ] ,
+		measureOf: "λ" ,
+		actual: duplicatedSpacings ,
+		expected: expectedDuplicatedSpacings ,
+		stdDev: sigmaDuplicatedSpacings ,
+		zScore ,
+		pValue
+	} ) ;
 } ;
 
