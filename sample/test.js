@@ -2,50 +2,12 @@
 "use strict" ;
 
 const rngKit = require( '..' ) ;
-
-const CLASS_FOR_TYPE_NAME = {
-	native: rngKit.Native ,
-	lcg: rngKit.Lcg ,
-	pcg: rngKit.Pcg32 ,
-	pcg32: rngKit.Pcg32 ,
-	xoshiro256ss: rngKit.Xoshiro256ss ,
-	xoshiro256: rngKit.Xoshiro256ss ,
-	xoshiro: rngKit.Xoshiro256ss ,
-	sha256prng: rngKit.Sha256Prng ,
-	"sha256-prng": rngKit.Sha256Prng ,
-	"sha-256-prng": rngKit.Sha256Prng ,
-	sha256: rngKit.Sha256Prng ,
-	"sha-256": rngKit.Sha256Prng ,
-	sha: rngKit.Sha256Prng ,
-	mersenne: rngKit.MersenneTwister ,
-	mersennetwister: rngKit.MersenneTwister ,
-	"mersenne-twister": rngKit.MersenneTwister ,
-	cryptorng: rngKit.CryptoRng ,
-	"crypto-rng": rngKit.CryptoRng ,
-	crypto: rngKit.CryptoRng
-} ;
-
-const type = process.argv[ 2 ] ;
-const seed = process.argv[ 3 ] ? process.argv[ 3 ] : null ;
-const channelSeed = process.argv[ 4 ] ? process.argv[ 4 ] : null ;
-const RngClass = type ? CLASS_FOR_TYPE_NAME[ type ] : rngKit.Native ;
-
-if ( ! RngClass ) {
-	throw new Error( "Bad type: " + type ) ;
-}
+const rng = require( './getRngFromCliArgs.js' ) ;
 
 function logStat( name , occurence , total ) {
 	const percent = Math.floor( occurence / total * 10000 ) / 100 ;
 	console.log( '' + name +': ' + percent + '%' ) ;
 }
-
-const rng = new RngClass() ;
-console.log( "RNG init:" , RngClass.name , "Seed:" , seed , "Channel seed:" , channelSeed ) ;
-
-if ( seed === null ) { rng.autoSeed() ; }
-else { rng.setSeed( seed , undefined , channelSeed ) ; }
-
-
 
 function run1() {
 	console.log( "RNG object:" , rng ) ;
@@ -323,5 +285,5 @@ function run8() {
 	console.log( "RNG object:" , rng ) ;
 }
 
-run7() ;
+run3() ;
 
