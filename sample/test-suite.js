@@ -4,8 +4,16 @@
 const rngKit = require( '..' ) ;
 const rng = require( './getRngFromCliArgs.js' ) ;
 
-const Uniform = require( './Uniform.js' ) ;
-const test = new Uniform( rng ) ;
+let test ;
+
+//*
+const Uniformity = require( './Uniformity.js' ) ;
+test = new Uniformity( rng ) ;
+test.run() ;
+//*/
+
+const BirthdaySpacings = require( './BirthdaySpacings.js' ) ;
+test = new BirthdaySpacings( rng ) ;
 test.run() ;
 
 

@@ -35,11 +35,13 @@ if ( ! RngClass ) {
 	throw new Error( "Bad type: " + type ) ;
 }
 
-const rng = new RngClass() ;
-console.log( "RNG:" , RngClass.name , "RNG params:" , subtype , "Seed:" , seed ) ;
+const rng = new RngClass( subtype ) ;
+console.log( "RNG type:" , RngClass.name , " --  RNG params:" , subtype , " --  Seed:" , seed ) ;
 
 if ( seed === null ) { rng.autoSeed() ; }
 else { rng.setSeed( seed , undefined , channelSeed ) ; }
+
+//console.log( "RNG:" , rng ) ;
 
 module.exports = rng ;
 
