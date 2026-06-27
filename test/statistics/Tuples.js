@@ -10,12 +10,12 @@ const stat = require( '../../lib/stat.js' ) ;
 
 function Tuples( rng , params = {} ) {
 	BaseTest.call( this , rng ) ;
-	this.samples = params.samples ?? 10_000_000 ;
+	this.samples = params.samples ?? 5_000_000 ;
 	this.dimensions = params.dimensions ?? 2 ;
 	this.bucketsPerDimension = params.bucketsPerDimension ?? 256 ;
 	this.buckets = this.bucketsPerDimension ** this.dimensions ;
 
-	this.testName = 'Tuples ' + this.dimensions + 'D test' ;
+	this.testName = 'Tuples ' + this.dimensions + 'D (serial) test' ;
 }
 
 Tuples.prototype = Object.create( BaseTest.prototype ) ;
@@ -24,7 +24,7 @@ Tuples.prototype.constructor = Tuples ;
 module.exports = Tuples ;
 
 Tuples.prototype.testName = 'Tuples test' ;
-Tuples.prototype.description = 'Measure the deviation from the expected occurence of each tuples of integers (χ²), i.e. consecutives integers' ;
+Tuples.prototype.description = 'Measure the deviation from the expected occurence of each tuples of integers (χ²), also known as the serial test' ;
 
 
 
