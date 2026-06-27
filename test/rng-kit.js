@@ -31,12 +31,31 @@
 
 
 const rngKit = require( '..' ) ;
+const crypto = require( 'crypto' ) ;
 
 
 
-describe( "..." , () => {
+describe( "SHA-256 built-in lib tests" , () => {
 
-	it( "..." , () => {
+	function compareHash( str ) {
+		expect( rngKit.sha256( str , 'hex' ) ).to.be( crypto.hash( 'sha256' , str ) ) ;
+	}
+
+	it( "should produce the same output than Node.js crypto.hash()" , () => {
+		compareHash( '' ) ;
+		compareHash( "a string" ) ;
+		compareHash( "yet another string" ) ;
+		compareHash( "a very very long string".repeat( 100 ) ) ;
+	} ) ;
+
+	it( "re-usable states" , () => {
+		let output ;
+		const state = rngKit.sha256.initState() ;
+
+		output = rngKit.sha256( "a string" , { outputFormat: 'hex' , state } ) ;
+		console.log( "output:" , output ) ;
+		output = rngKit.sha256( "a string" , { outputFormat: 'hex' , state } ) ;
+		console.log( "output:" , output , rngKit.sha256( "a stringa string" , 'hex' ) ) ;
 	} ) ;
 } ) ;
 
