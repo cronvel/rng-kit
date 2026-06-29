@@ -20,7 +20,7 @@ Runs.prototype.constructor = Runs ;
 module.exports = Runs ;
 
 Runs.prototype.testName = 'Runs' ;
-Runs.prototype.description = 'Measure the number of consecutive ups and downs' ;
+Runs.prototype.description = 'Measure the number of consecutive below / above the median' ;
 
 
 
@@ -30,6 +30,21 @@ Runs.prototype.run = function() {
 	const runsHistogram = new Array( this.maxRunLength ).fill( 0 ) ;
 	const expectedChiSquared = this.maxRunLength - 1 ;
 	const sigmaChiSquared = Math.sqrt( 2 * expectedChiSquared ) ;	// standard deviation for chi²
+
+
+	let belowCount = 0 , aboveCount = 0 ;
+
+	for ( let i = 0 ; i < this.samples ; i ++ ) {
+		if ( this.preAllocator.floatArray[ i ] < 0.5 ) { belowCount ++ ; }
+		else { aboveCount ++ ; }
+	}
+
+	const expectedRuns = 1 + ( 2 * belowCount * aboveCount ) / this.samples ;
+	const sigmaRuns = Math.sqrt(
+		( 2 * belowCount * aboveCount ) * ( 2 * belowCount * aboveCount - this.samples ) /
+		( ( this.samples * this.samples ) * ( this.samples - 1 ) )
+	) ;
+
 
 	let previousFloat = this.preAllocator.floatArray[ 0 ] ;
 	let currentRunLength = 0 ;	// in fact, the real run value is currentRunLength + 1, but we store in a zero-index-based array
@@ -76,13 +91,20 @@ Runs.prototype.run = function() {
 	}
 
 	const zScore = BaseTest.zScore( chiSquared , expectedChiSquared , sigmaChiSquared ) ;
+	const zScoreRuns = BaseTest.zScore( runs , expectedRuns , sigmaRuns ) ;
 	const pValue = BaseTest.zScoreToPValue( zScore ) ;
 
 	const duration = Date.now() - startTime ;
 
 	this.reportData = {
 		duration ,
-		extra: [ 'maxRunLength' , [ 'runs' , runs ] ] ,
+		extra: [
+			'maxRunLength' ,
+			[ 'Runs' , runs ] ,
+			[ 'Expected Runs' , expectedRuns , "%[.2]f" ] ,
+			[ 'Std-dev of Runs' , sigmaRuns , "%[.2]f" ] ,
+			[ 'Z-score Runs' , zScoreRuns , "%[+.2]fσ" ] ,
+		] ,
 		measureOf: "χ²" ,
 		actual: chiSquared ,
 		expected: expectedChiSquared ,

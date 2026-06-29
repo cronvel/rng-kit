@@ -55,7 +55,13 @@ BaseTest.prototype.displayReport = function() {
 			}
 			else if ( Array.isArray( extraParam ) ) {
 				// This is an ad-hoc value
-				logger.log( string.toTitleCase( extraParam[ 0 ] ) + ": %f" , extraParam[ 1 ] ) ;
+				if ( extraParam[ 2 ] ) {
+					// Has a format
+					logger.log( string.toTitleCase( extraParam[ 0 ] ) + ": " + extraParam[ 2 ] , extraParam[ 1 ] ) ;
+				}
+				else {
+					logger.log( string.toTitleCase( extraParam[ 0 ] ) + ": %f" , extraParam[ 1 ] ) ;
+				}
 			}
 		}
 	}
