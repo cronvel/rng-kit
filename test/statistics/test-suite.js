@@ -11,16 +11,28 @@ const logger = require( './logger.js' ) ;
 const TESTS = [
 	'Uniformity' ,
 	'BirthdaySpacings' ,
+	'Runs' ,
+	//*
 	'Tuples' ,
 	[ 'Tuples' , { lag: 2 } ] ,
 	[ 'Tuples' , { lag: 3 } ] ,
+	[ 'Tuples' , { lag: 4 } ] ,
 	[ 'Tuples' , { lag: 5 } ] ,
 	[ 'Tuples' , { lag: 7 } ] ,
+	[ 'Tuples' , { lag: 8 } ] ,
+	[ 'Tuples' , { lag: 11 } ] ,
+	[ 'Tuples' , { lag: 13 } ] ,
+	[ 'Tuples' , { lag: 16 } ] ,
+	[ 'Tuples' , { lag: 23 } ] ,
+	[ 'Tuples' , { lag: 32 } ] ,
+	[ 'Tuples' , { lag: 47 } ] ,
+	[ 'Tuples' , { lag: 64 } ] ,
 	[ 'Tuples' , { dimensions: 3 , bucketsPerDimension: 100 , samples: 20_000_000 } ] ,
 	[ 'Tuples' , { dimensions: 3 , lag: 2 , bucketsPerDimension: 100 , samples: 20_000_000 } ] ,
 	[ 'Tuples' , { dimensions: 3 , lag: 3 , bucketsPerDimension: 100 , samples: 20_000_000 } ] ,
 	[ 'Tuples' , { dimensions: 3 , lag: 5 , bucketsPerDimension: 100 , samples: 20_000_000 } ] ,
 	[ 'Tuples' , { dimensions: 3 , lag: 7 , bucketsPerDimension: 100 , samples: 20_000_000 } ] ,
+	//*/
 ] ;
 
 
@@ -63,9 +75,11 @@ function run() {
 	logger.log( "All random number generations done in: %[.3!a]t" , fullRngDuration ) ;
 	logger.log( "All tests done in: %[.3!a]t" , fullRunDuration ) ;
 
-	for ( let test of tests ) {
-		test.displayReport() ;
-	}
+	logger.log( "\n\n\n^+^WFull Report:\n" ) 
+	for ( let test of tests ) { test.displayReport() ; }
+
+	logger.log( "\n\n\n^+^WSummary:" ) 
+	for ( let test of tests ) { test.displaySummary() ; }
 }
 
 run() ;

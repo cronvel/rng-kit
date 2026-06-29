@@ -29,15 +29,13 @@ BirthdaySpacings.prototype.description = 'Measure the number of duplicated spaci
 BirthdaySpacings.prototype.run = function() {
 	const startTime = Date.now() ;
 
-	const generator = this.preAllocator.floatGenerator() ;
-
 	let duplicatedSpacings = 0 ;
 
 	for ( let batch = 0 ; batch < this.batches ; batch ++ ) {
 		const randomArray = [] ;
 
 		for ( let i = 0 ; i < this.samples ; i ++ ) {
-			const float = generator.next().value ;
+			const float = this.preAllocator.floatArray[ batch * this.samples + i ] ;
 			const int = Math.floor( float * this.interval ) ;
 			randomArray.push( int ) ;
 		}

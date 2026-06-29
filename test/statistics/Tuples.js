@@ -35,7 +35,6 @@ Tuples.prototype.description = 'Measure the deviation from the expected occurenc
 Tuples.prototype.run = function() {
 	const startTime = Date.now() ;
 
-	//const generator = this.preAllocator.floatGenerator() ;
 	const bucketsCounter = new Uint32Array( this.buckets ).fill( 0 ) ;
 	const expected = this.samples / this.buckets ;
 	const sigma = Math.sqrt( expected ) ;	// standard deviation

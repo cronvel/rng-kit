@@ -43,10 +43,13 @@ PreAllocator.prototype.allocateFloats = function( count ) {
 } ;
 
 
-
+/*
+// Probably useless, it's best to tap directly into the floatArray, since some tests require
+// seeking multiple random number ahead, and going back and forth...
 PreAllocator.prototype.floatGenerator = function*() {
 	for ( let i = 0 ; i < this.allocatedFloats ; i ++ ) {
 		yield this.floatArray[ i ] ;
 	}
 } ;
+*/
 

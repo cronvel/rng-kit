@@ -50,7 +50,12 @@ BaseTest.prototype.displayReport = function() {
 	if ( this.reportData.extra ) {
 		for ( let extraParam of this.reportData.extra ) {
 			if ( typeof extraParam === 'string' ) {
+				// This is a property of the object
 				logger.log( string.toTitleCase( extraParam ) + ": %f" , this[ extraParam ] ) ;
+			}
+			else if ( Array.isArray( extraParam ) ) {
+				// This is an ad-hoc value
+				logger.log( string.toTitleCase( extraParam[ 0 ] ) + ": %f" , extraParam[ 1 ] ) ;
 			}
 		}
 	}
@@ -60,16 +65,30 @@ BaseTest.prototype.displayReport = function() {
 	logger.log( "Std-dev of " + this.reportData.measureOf + ": %[.2]f" , this.reportData.stdDev ) ;
 
 	if ( Math.abs( this.reportData.zScore ) > 5 ) {
-		logger.log( "Z-score: ^R%[+.2]fσ " , this.reportData.zScore ) ;
-		logger.log( "P-value: %[5]f " , this.reportData.pValue ) ;
+		logger.log( "Z-score: ^R%[+.2]fσ" , this.reportData.zScore ) ;
+		logger.log( "P-value: %[5]f" , this.reportData.pValue ) ;
 	}
 	else if ( Math.abs( this.reportData.zScore ) > 3 ) {
-		logger.log( "Z-score: ^Y%[+.2]fσ " , this.reportData.zScore ) ;
-		logger.log( "P-value: %[5]f " , this.reportData.pValue ) ;
+		logger.log( "Z-score: ^Y%[+.2]fσ" , this.reportData.zScore ) ;
+		logger.log( "P-value: %[5]f" , this.reportData.pValue ) ;
 	}
 	else {
-		logger.log( "Z-score: %[+.2]fσ " , this.reportData.zScore ) ;
-		logger.log( "P-value: %[5]f " , this.reportData.pValue ) ;
+		logger.log( "Z-score: %[+.2]fσ" , this.reportData.zScore ) ;
+		logger.log( "P-value: %[5]f" , this.reportData.pValue ) ;
+	}
+} ;
+
+
+
+BaseTest.prototype.displaySummary = function() {
+	if ( Math.abs( this.reportData.zScore ) > 5 ) {
+		logger.log( "  ^r✘ %s (%[+.2]fσ)" , this.testName , this.reportData.zScore ) ;
+	}
+	else if ( Math.abs( this.reportData.zScore ) > 3 ) {
+		logger.log( "  ^y≈ %s (%[+.2]fσ)" , this.testName , this.reportData.zScore ) ;
+	}
+	else {
+		logger.log( "  ^g✔ %s (%[+.2]fσ)" , this.testName , this.reportData.zScore ) ;
 	}
 } ;
 

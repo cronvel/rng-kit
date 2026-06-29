@@ -28,7 +28,6 @@ Uniformity.prototype.description = 'Measure the deviation from the expected occu
 Uniformity.prototype.run = function() {
 	const startTime = Date.now() ;
 
-	const generator = this.preAllocator.floatGenerator() ;
 	const bucketsCounter = new Array( this.buckets ).fill( 0 ) ;
 	const expected = this.samples / this.buckets ;
 	const sigma = Math.sqrt( expected ) ;	// standard deviation
@@ -36,7 +35,7 @@ Uniformity.prototype.run = function() {
 	const sigmaChiSquared = Math.sqrt( 2 * expectedChiSquared ) ;	// standard deviation for chi²
 
 	for ( let i = 0 ; i < this.samples ; i ++ ) {
-		const float = generator.next().value ;
+		const float = this.preAllocator.floatArray[ i ] ;
 		const int = Math.floor( float * this.buckets ) ;
 		bucketsCounter[ int ] ++ ;
 	}
