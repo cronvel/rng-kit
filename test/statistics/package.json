@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "string-kit": "^0.19.5"
+    "terminal-kit": "^3.1.3"
   }
 }

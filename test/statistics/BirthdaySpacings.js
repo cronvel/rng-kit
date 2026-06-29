@@ -1,4 +1,3 @@
-
 "use strict" ;
 
 const BaseTest = require( './BaseTest.js' ) ;
@@ -8,11 +7,13 @@ const stat = require( '../../lib/stat.js' ) ;
 
 
 
-function BirthdaySpacings( rng , params = {} ) {
-	BaseTest.call( this , rng ) ;
+function BirthdaySpacings( preAllocator , params = {} ) {
+	BaseTest.call( this , preAllocator ) ;
 	this.batches = params.batches ?? 100 ;
 	this.samples = params.samples ?? 400 ;
 	this.interval = params.interval ?? 1_000_000 ;
+
+	this.requiredFloats = this.batches * this.samples ;
 }
 
 BirthdaySpacings.prototype = Object.create( BaseTest.prototype ) ;
@@ -20,7 +21,7 @@ BirthdaySpacings.prototype.constructor = BirthdaySpacings ;
 
 module.exports = BirthdaySpacings ;
 
-BirthdaySpacings.prototype.testName = 'Birthday Spacings test' ;
+BirthdaySpacings.prototype.testName = 'Birthday Spacings' ;
 BirthdaySpacings.prototype.description = 'Measure the number of duplicated spacings (λ)' ;
 
 
@@ -28,13 +29,17 @@ BirthdaySpacings.prototype.description = 'Measure the number of duplicated spaci
 BirthdaySpacings.prototype.run = function() {
 	const startTime = Date.now() ;
 
+	const generator = this.preAllocator.floatGenerator() ;
+
 	let duplicatedSpacings = 0 ;
 
 	for ( let batch = 0 ; batch < this.batches ; batch ++ ) {
 		const randomArray = [] ;
 
 		for ( let i = 0 ; i < this.samples ; i ++ ) {
-			randomArray.push( this.rng.randomInt( this.interval ) ) ;
+			const float = generator.next().value ;
+			const int = Math.floor( float * this.interval ) ;
+			randomArray.push( int ) ;
 		}
 
 		randomArray.sort( ( a , b ) => a - b ) ;
@@ -58,7 +63,7 @@ BirthdaySpacings.prototype.run = function() {
 
 	const duration = Date.now() - startTime ;
 
-	this.displayResults( {
+	this.reportData = {
 		duration ,
 		extra: [ 'interval' ] ,
 		measureOf: "λ" ,
@@ -67,6 +72,6 @@ BirthdaySpacings.prototype.run = function() {
 		stdDev: sigmaDuplicatedSpacings ,
 		zScore ,
 		pValue
-	} ) ;
+	} ;
 } ;
 

@@ -1,4 +1,3 @@
-
 "use strict" ;
 
 const stat = require( '../../lib/stat.js' ) ;
@@ -8,8 +7,10 @@ const string = require( 'string-kit' ) ;
 
 
 
-function BaseTest( rng ) {
-	this.rng = rng ;
+function BaseTest( preAllocator ) {
+	this.preAllocator = preAllocator ;
+	this.requiredFloats = 0 ;
+	this.reportData = null ;
 }
 
 module.exports = BaseTest ;
@@ -22,10 +23,20 @@ BaseTest.aggregateZScores = ( ... zScores ) => zScores.reduce( ( acc , zScore ) 
 
 
 
-BaseTest.prototype.displayResults = function( params ) {
+BaseTest.prototype.prepare = function() {
+	this.preAllocator.allocateFloats( this.requiredFloats ) ;
+} ;
+
+
+
+BaseTest.prototype.displayReport = function() {
 	logger.log( "\n^B== %s ==" , this.testName ) ;
 	logger.log( "^K  -- %s" , this.description ) ;
-	logger.log( "Duration: %[.3!a]t" , params.duration ) ;
+	logger.log( "Duration: %[.3!a]t" , this.reportData.duration ) ;
+
+	if ( this.requiredFloats ) {
+		logger.log( "Required random floats: %k" , this.requiredFloats ) ;
+	}
 
 	if ( Object.hasOwn( this , 'batches' ) ) {
 		logger.log( "Batches: %k" , this.batches ) ;
@@ -36,29 +47,29 @@ BaseTest.prototype.displayResults = function( params ) {
 		logger.log( "Samples: %k" , this.samples ) ;
 	}
 
-	if ( params.extra ) {
-		for ( let extraParam of params.extra ) {
+	if ( this.reportData.extra ) {
+		for ( let extraParam of this.reportData.extra ) {
 			if ( typeof extraParam === 'string' ) {
 				logger.log( string.toTitleCase( extraParam ) + ": %f" , this[ extraParam ] ) ;
 			}
 		}
 	}
 
-	logger.log( params.measureOf + ": %[.2]f" , params.actual ) ;
-	logger.log( "Expected " + params.measureOf + ": %[.2]f" , params.expected ) ;
-	logger.log( "Std-dev of " + params.measureOf + ": %[.2]f" , params.stdDev ) ;
+	logger.log( this.reportData.measureOf + ": %[.2]f" , this.reportData.actual ) ;
+	logger.log( "Expected " + this.reportData.measureOf + ": %[.2]f" , this.reportData.expected ) ;
+	logger.log( "Std-dev of " + this.reportData.measureOf + ": %[.2]f" , this.reportData.stdDev ) ;
 
-	if ( Math.abs( params.zScore ) > 5 ) {
-		logger.log( "Z-score: ^R%[+.2]fσ " , params.zScore ) ;
-		logger.log( "P-value: %[5]f " , params.pValue ) ;
+	if ( Math.abs( this.reportData.zScore ) > 5 ) {
+		logger.log( "Z-score: ^R%[+.2]fσ " , this.reportData.zScore ) ;
+		logger.log( "P-value: %[5]f " , this.reportData.pValue ) ;
 	}
-	else if ( Math.abs( params.zScore ) > 3 ) {
-		logger.log( "Z-score: ^Y%[+.2]fσ " , params.zScore ) ;
-		logger.log( "P-value: %[5]f " , params.pValue ) ;
+	else if ( Math.abs( this.reportData.zScore ) > 3 ) {
+		logger.log( "Z-score: ^Y%[+.2]fσ " , this.reportData.zScore ) ;
+		logger.log( "P-value: %[5]f " , this.reportData.pValue ) ;
 	}
 	else {
-		logger.log( "Z-score: %[+.2]fσ " , params.zScore ) ;
-		logger.log( "P-value: %[5]f " , params.pValue ) ;
+		logger.log( "Z-score: %[+.2]fσ " , this.reportData.zScore ) ;
+		logger.log( "P-value: %[5]f " , this.reportData.pValue ) ;
 	}
 } ;
 

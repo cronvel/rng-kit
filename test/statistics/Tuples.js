@@ -1,4 +1,3 @@
-
 "use strict" ;
 
 const BaseTest = require( './BaseTest.js' ) ;
@@ -8,14 +7,19 @@ const stat = require( '../../lib/stat.js' ) ;
 
 
 
-function Tuples( rng , params = {} ) {
-	BaseTest.call( this , rng ) ;
+function Tuples( preAllocator , params = {} ) {
+	BaseTest.call( this , preAllocator ) ;
 	this.samples = params.samples ?? 5_000_000 ;
 	this.dimensions = params.dimensions ?? 2 ;
 	this.bucketsPerDimension = params.bucketsPerDimension ?? 256 ;
 	this.buckets = this.bucketsPerDimension ** this.dimensions ;
+	this.lag = params.lag ?? 1 ;
 
-	this.testName = 'Tuples ' + this.dimensions + 'D (serial) test' ;
+	this.requiredFloats = this.samples + ( this.dimensions - 1 ) * this.lag ;
+
+	this.testName =
+		this.lag === 1 ? 'Serial Tuples ' + this.dimensions + 'D' :
+		'Lagged Tuples ' + this.dimensions + 'D (lag=' + this.lag + ')' ;
 }
 
 Tuples.prototype = Object.create( BaseTest.prototype ) ;
@@ -23,33 +27,32 @@ Tuples.prototype.constructor = Tuples ;
 
 module.exports = Tuples ;
 
-Tuples.prototype.testName = 'Tuples test' ;
-Tuples.prototype.description = 'Measure the deviation from the expected occurence of each tuples of integers (χ²), also known as the serial test' ;
+Tuples.prototype.testName = 'Tuples' ;
+Tuples.prototype.description = 'Measure the deviation from the expected occurence of each tuples of integers (χ²), also known as the serial test for lag=1' ;
 
 
 
 Tuples.prototype.run = function() {
 	const startTime = Date.now() ;
 
+	//const generator = this.preAllocator.floatGenerator() ;
 	const bucketsCounter = new Uint32Array( this.buckets ).fill( 0 ) ;
 	const expected = this.samples / this.buckets ;
 	const sigma = Math.sqrt( expected ) ;	// standard deviation
 	const expectedChiSquared = this.buckets - 1 ;
 	const sigmaChiSquared = Math.sqrt( 2 * expectedChiSquared ) ;	// standard deviation for chi²
 
-	const iteration = this.samples + this.dimensions - 1 ;
 	const tuple = [] ;
 
-	for ( let i = 0 ; i < this.dimensions - 1 ; i ++ ) {
-		tuple.push( this.rng.randomInt( this.bucketsPerDimension ) ) ;
-	}
-
 	for ( let i = 0 ; i < this.samples ; i ++ ) {
-		tuple.push( this.rng.randomInt( this.bucketsPerDimension ) ) ;
+		for ( let d = 0 ; d < this.dimensions ; d ++ ) {
+			const float = this.preAllocator.floatArray[ i + d * this.lag ] ;
+			const int = Math.floor( float * this.bucketsPerDimension ) ;
+			tuple[ d ] = int ;
+		}
+			
 		let index = this.tupleToIndex( tuple ) ;
 		bucketsCounter[ index ] ++ ;
-
-		tuple.shift() ;
 	}
 
 	let chiSquared = 0 ;
@@ -65,16 +68,16 @@ Tuples.prototype.run = function() {
 
 	const duration = Date.now() - startTime ;
 	
-	this.displayResults( {
+	this.reportData = {
 		duration ,
-		extra: [ 'dimensions' , 'bucketsPerDimension' , 'buckets' ] ,
+		extra: [ 'dimensions' , 'lag' , 'bucketsPerDimension' , 'buckets' ] ,
 		measureOf: "χ²" ,
 		actual: chiSquared ,
 		expected: expectedChiSquared ,
 		stdDev: sigmaChiSquared ,
 		zScore ,
 		pValue
-	} ) ;
+	} ;
 } ;
 
 
