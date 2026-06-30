@@ -9,9 +9,25 @@ const logger = require( './logger.js' ) ;
 
 
 const TESTS = [
+	//*
 	'Uniformity' ,
 	'BirthdaySpacings' ,
 	'Runs' ,
+	//*/
+	'Autocorrelation' ,
+	[ 'Autocorrelation' , { lag: 2 } ] ,
+	[ 'Autocorrelation' , { lag: 3 } ] ,
+	[ 'Autocorrelation' , { lag: 4 } ] ,
+	[ 'Autocorrelation' , { lag: 5 } ] ,
+	[ 'Autocorrelation' , { lag: 7 } ] ,
+	[ 'Autocorrelation' , { lag: 8 } ] ,
+	[ 'Autocorrelation' , { lag: 11 } ] ,
+	[ 'Autocorrelation' , { lag: 13 } ] ,
+	[ 'Autocorrelation' , { lag: 16 } ] ,
+	[ 'Autocorrelation' , { lag: 23 } ] ,
+	[ 'Autocorrelation' , { lag: 32 } ] ,
+	[ 'Autocorrelation' , { lag: 47 } ] ,
+	[ 'Autocorrelation' , { lag: 64 } ] ,
 	//*
 	'Tuples' ,
 	[ 'Tuples' , { lag: 2 } ] ,

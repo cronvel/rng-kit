@@ -7,7 +7,7 @@
     "test": "test"
   },
   "dependencies": {
-    "array-kit": "^0.2.8"
+    "array-kit": "^0.2.9"
   },
   "scripts": {
     "test": "tea-time -R dot"

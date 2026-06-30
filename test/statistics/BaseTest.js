@@ -66,9 +66,9 @@ BaseTest.prototype.displayReport = function() {
 		}
 	}
 
-	logger.log( this.reportData.measureOf + ": %[.2]f" , this.reportData.actual ) ;
-	logger.log( "Expected " + this.reportData.measureOf + ": %[.2]f" , this.reportData.expected ) ;
-	logger.log( "Std-dev of " + this.reportData.measureOf + ": %[.2]f" , this.reportData.stdDev ) ;
+	logger.log( this.reportData.measureOf + ": %f" , this.reportData.actual ) ;
+	logger.log( "Expected " + this.reportData.measureOf + ": %f" , this.reportData.expected ) ;
+	logger.log( "Std-dev of " + this.reportData.measureOf + ": %f" , this.reportData.stdDev ) ;
 
 	if ( Math.abs( this.reportData.zScore ) > 5 ) {
 		logger.log( "Z-score: ^R%[+.2]fσ" , this.reportData.zScore ) ;
