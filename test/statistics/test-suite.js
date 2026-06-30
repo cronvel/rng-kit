@@ -6,49 +6,17 @@ const rng = require( './getRngFromCliArgs.js' ) ;
 const PreAllocator = require( './PreAllocator.js' ) ;
 const logger = require( './logger.js' ) ;
 
-
+// Common lags, using a mix of primes and power of 2
+const LAGS = [ 1 , 2 , 3 , 4 , 5 , 7 , 8 , 11 , 13 , 16 , 23 , 32 , 47 , 64 ] ;
+const LESS_LAGS = [ 1 , 2 , 3 , 5 , 7 ] ;
 
 const TESTS = [
-	//*
 	'Uniformity' ,
 	'BirthdaySpacings' ,
 	'Runs' ,
-	//*/
-	'Autocorrelation' ,
-	[ 'Autocorrelation' , { lag: 2 } ] ,
-	[ 'Autocorrelation' , { lag: 3 } ] ,
-	[ 'Autocorrelation' , { lag: 4 } ] ,
-	[ 'Autocorrelation' , { lag: 5 } ] ,
-	[ 'Autocorrelation' , { lag: 7 } ] ,
-	[ 'Autocorrelation' , { lag: 8 } ] ,
-	[ 'Autocorrelation' , { lag: 11 } ] ,
-	[ 'Autocorrelation' , { lag: 13 } ] ,
-	[ 'Autocorrelation' , { lag: 16 } ] ,
-	[ 'Autocorrelation' , { lag: 23 } ] ,
-	[ 'Autocorrelation' , { lag: 32 } ] ,
-	[ 'Autocorrelation' , { lag: 47 } ] ,
-	[ 'Autocorrelation' , { lag: 64 } ] ,
-	//*
-	'Tuples' ,
-	[ 'Tuples' , { lag: 2 } ] ,
-	[ 'Tuples' , { lag: 3 } ] ,
-	[ 'Tuples' , { lag: 4 } ] ,
-	[ 'Tuples' , { lag: 5 } ] ,
-	[ 'Tuples' , { lag: 7 } ] ,
-	[ 'Tuples' , { lag: 8 } ] ,
-	[ 'Tuples' , { lag: 11 } ] ,
-	[ 'Tuples' , { lag: 13 } ] ,
-	[ 'Tuples' , { lag: 16 } ] ,
-	[ 'Tuples' , { lag: 23 } ] ,
-	[ 'Tuples' , { lag: 32 } ] ,
-	[ 'Tuples' , { lag: 47 } ] ,
-	[ 'Tuples' , { lag: 64 } ] ,
-	[ 'Tuples' , { dimensions: 3 , bucketsPerDimension: 100 , samples: 20_000_000 } ] ,
-	[ 'Tuples' , { dimensions: 3 , lag: 2 , bucketsPerDimension: 100 , samples: 20_000_000 } ] ,
-	[ 'Tuples' , { dimensions: 3 , lag: 3 , bucketsPerDimension: 100 , samples: 20_000_000 } ] ,
-	[ 'Tuples' , { dimensions: 3 , lag: 5 , bucketsPerDimension: 100 , samples: 20_000_000 } ] ,
-	[ 'Tuples' , { dimensions: 3 , lag: 7 , bucketsPerDimension: 100 , samples: 20_000_000 } ] ,
-	//*/
+	... LAGS.map( lag => [ 'Autocorrelation' , { lag } ] ) ,
+	... LAGS.map( lag => [ 'Tuples' , { lag } ] ) ,
+	... LESS_LAGS.map( lag => [ 'Tuples' , { lag , dimensions: 3 , bucketsPerDimension: 100 , samples: 20_000_000 } ] ) ,
 ] ;
 
 
