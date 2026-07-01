@@ -16,6 +16,7 @@ const TESTS = [
 	'Uniformity' ,
 	'BirthdaySpacings' ,
 	'Runs' ,
+	'Poker' ,
 	... GAP_INTERVALS.map( ( [ intervalMin , intervalMax ] ) => [ 'Gap' , { intervalMin , intervalMax } ] ) ,
 	... LAGS.map( lag => [ 'Autocorrelation' , { lag } ] ) ,
 	... LAGS.map( lag => [ 'Tuples' , { lag } ] ) ,

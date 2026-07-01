@@ -24,7 +24,7 @@ Gap.prototype.constructor = Gap ;
 module.exports = Gap ;
 
 Gap.prototype.testName = 'Gap' ;
-Gap.prototype.description = 'Measure the number of consecutive below / above the median' ;
+Gap.prototype.description = 'Measure the gap between number out of a specific interval' ;
 
 
 
@@ -85,7 +85,7 @@ Gap.prototype.run = function() {
 		const expected = probability * gapCount ;
 		const errorSquared = ( ( gapHistogram[ i ] - expected ) ** 2 ) / expected ;
 		chiSquared += errorSquared ;
-		logger.log( "Error for gap %i:\t%[.2]f\t%i / %[.2]f" , i , errorSquared , gapHistogram[ i ] , expected ) ;
+		//logger.log( "Error for gap %i:\t%[.2]f\t%i / %[.2]f" , i , errorSquared , gapHistogram[ i ] , expected ) ;
 	}
 
 	const zScore = BaseTest.zScore( chiSquared , expectedChiSquared , sigmaChiSquared ) ;
