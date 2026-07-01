@@ -8,15 +8,19 @@ const logger = require( './logger.js' ) ;
 
 // Common lags, using a mix of primes and power of 2
 const LAGS = [ 1 , 2 , 3 , 4 , 5 , 7 , 8 , 11 , 13 , 16 , 23 , 32 , 47 , 64 ] ;
-const LESS_LAGS = [ 1 , 2 , 3 , 5 , 7 ] ;
+//const LESS_LAGS = [ 1 , 2 , 3 , 5 , 7 ] ;
+const GAP_INTERVALS = [ [ 0 , 0.5 ] , [ 0.25 , 0.5 ] , [ 0 , 0.1 ] , [ 0.1 , 0.2 ] , [ 0 , 0.01 ] , [ 0.9 , 1 ] , [ 0.99 , 1 ] ] ;
 
 const TESTS = [
+	//*
 	'Uniformity' ,
 	'BirthdaySpacings' ,
 	'Runs' ,
+	... GAP_INTERVALS.map( ( [ intervalMin , intervalMax ] ) => [ 'Gap' , { intervalMin , intervalMax } ] ) ,
 	... LAGS.map( lag => [ 'Autocorrelation' , { lag } ] ) ,
 	... LAGS.map( lag => [ 'Tuples' , { lag } ] ) ,
-	... LESS_LAGS.map( lag => [ 'Tuples' , { lag , dimensions: 3 , bucketsPerDimension: 100 , samples: 20_000_000 } ] ) ,
+	... LAGS.map( lag => [ 'Tuples' , { lag , dimensions: 3 , bucketsPerDimension: 100 , samples: 20_000_000 } ] ) ,
+	//*/
 ] ;
 
 

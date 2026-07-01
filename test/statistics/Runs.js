@@ -46,7 +46,6 @@ Runs.prototype.run = function() {
 	) ;
 
 
-	let previousFloat = this.preAllocator.floatArray[ 0 ] ;
 	let currentRunLength = 0 ;	// in fact, the real run value is currentRunLength + 1, but we store in a zero-index-based array
 	let runs = 1 ;
 
@@ -83,7 +82,7 @@ Runs.prototype.run = function() {
 	let chiSquared = 0 ;
 
 	for ( let i = 0 ; i < this.maxRunLength ; i ++ ) {
-		// The Math.min part is because the last bucket has all the tails merged
+		// The Math.min part is because the last bucket has all the tails merged, this works because of the exact 1/2 split
 		const expected = runs * ( 2 ** - Math.min( i + 1 , this.maxRunLength - 1 ) ) ;
 		const errorSquared = ( ( runsHistogram[ i ] - expected ) ** 2 ) / expected ;
 		chiSquared += errorSquared ;
@@ -102,8 +101,8 @@ Runs.prototype.run = function() {
 			'maxRunLength' ,
 			[ 'Runs' , runs ] ,
 			[ 'Expected Runs' , expectedRuns , "%[.2]f" ] ,
-			[ 'Std-dev of Runs' , sigmaRuns , "%[.2]f" ] ,
-			[ 'Z-score Runs' , zScoreRuns , "%[+.2]fσ" ] ,
+			[ 'Std-dev of Runs' , sigmaRuns , "%[.2]f" ] ,
+			[ 'Z-score Runs' , zScoreRuns , "%[+.2]fσ" ]
 		] ,
 		measureOf: "χ²" ,
 		actual: chiSquared ,
