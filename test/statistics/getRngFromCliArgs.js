@@ -5,25 +5,28 @@ const rngKit = require( '../..' ) ;
 const CLASS_FOR_TYPE_NAME = {
 	native: rngKit.Native ,
 	lcg: rngKit.Lcg ,
-	pcg: rngKit.Pcg32 ,
 	pcg32: rngKit.Pcg32 ,
+	pcg: rngKit.Pcg32 ,
 	xoshiro256ss: rngKit.Xoshiro256ss ,
 	xoshiro256: rngKit.Xoshiro256ss ,
 	xoshiro: rngKit.Xoshiro256ss ,
-	sha256prng: rngKit.Sha256Prng ,
-	"sha256-prng": rngKit.Sha256Prng ,
-	"sha-256-prng": rngKit.Sha256Prng ,
-	sha256: rngKit.Sha256Prng ,
-	"sha-256": rngKit.Sha256Prng ,
-	sha: rngKit.Sha256Prng ,
-	mersenne: rngKit.MersenneTwister ,
+	sha256counter: rngKit.Sha256Counter ,
+	"sha256-counter": rngKit.Sha256Counter ,
+	"sha-256-counter": rngKit.Sha256Counter ,
+	sha256: rngKit.Sha256Counter ,
+	"sha-256": rngKit.Sha256Counter ,
+	sha: rngKit.Sha256Counter ,
 	mersennetwister: rngKit.MersenneTwister ,
 	"mersenne-twister": rngKit.MersenneTwister ,
+	mersenne: rngKit.MersenneTwister ,
+	mt: rngKit.MersenneTwister ,
 	cryptorng: rngKit.CryptoRng ,
 	"crypto-rng": rngKit.CryptoRng ,
 	crypto: rngKit.CryptoRng ,
 	phiexp: rngKit.PhiExp ,
-	phi: rngKit.PhiExp
+	phi: rngKit.PhiExp ,
+	sha256drf: rngKit.Sha256Drf ,
+	drf: rngKit.Sha256Drf
 } ;
 
 const type = process.argv[ 2 ] ;

@@ -285,5 +285,107 @@ function run8() {
 	console.log( "RNG object:" , rng ) ;
 }
 
-run3() ;
+// DRF
+function run9() {
+	console.log( "DRF object:" , rng ) ;
+
+	console.log( "\n>>> First run:" ) ;
+	for ( let x = -1 ; x <= 1  ; x ++ ) {
+		for ( let y = -2 ; y <= 2  ; y ++ ) {
+			let v = rng.key( x , y ).randomFloat() ;
+			console.log( 'float at (' + x + ';' + y + '):' , v ) ;
+		}
+	}
+
+	console.log( "\n>>> Second run:" ) ;
+	for ( let x = -2 ; x <= 2  ; x ++ ) {
+		for ( let y = -1 ; y <= 1  ; y ++ ) {
+			let v = rng.key( x , y ).randomFloat() ;
+			console.log( 'float at (' + x + ';' + y + '):' , v ) ;
+		}
+	}
+
+	const x = 3 , y = 4 ;
+	let keyedRng ;
+	keyedRng = rng.key( x , y ) ;
+	console.log( "\n>>> First run of 3 consecutive float:" ) ;
+	for ( let i = 0 ; i < 3  ; i ++ ) {
+		let v = keyedRng.randomFloat() ;
+		console.log( 'float #' + i + ' at (' + x + ';' + y + '):' , v ) ;
+	}
+
+	console.log( "\n>>> Second run of 3 consecutive float:" ) ;
+	keyedRng = rng.key( x , y ) ;
+	for ( let i = 0 ; i < 3  ; i ++ ) {
+		let v = keyedRng.randomFloat() ;
+		console.log( 'float #' + i + ' at (' + x + ';' + y + '):' , v ) ;
+	}
+
+	console.log( "\n>>> First run:" ) ;
+	for ( let x = -1 ; x <= 1  ; x ++ ) {
+		for ( let y = -2 ; y <= 2  ; y ++ ) {
+			let v = rng.key( x , y ).randomUnitVector( 2 ) ;
+			console.log( 'Unit vector at (' + x + ';' + y + '):' , v ) ;
+		}
+	}
+
+	console.log( "\n>>> Second run:" ) ;
+	for ( let x = -2 ; x <= 2  ; x ++ ) {
+		for ( let y = -1 ; y <= 1  ; y ++ ) {
+			let v = rng.key( x , y ).randomUnitVector( 2 ) ;
+			console.log( 'Unit vector at (' + x + ';' + y + '):' , v ) ;
+		}
+	}
+
+	console.log( "DRF object:" , rng ) ;
+}
+
+function run10() {
+	console.log( "RNG object:" , rng ) ;
+
+	const max = 10 ;
+
+	//*
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.randomUnitVector( 2 ) ;
+		console.log( 'Vector 2D #' + i + ':' , v ) ;
+	}
+	//*/
+
+	//*
+	for ( let i = 0 ; i < max ; i ++ ) {
+		let v = rng.randomUnitVector( 3 ) ;
+		console.log( 'Vector 3D #' + i + ':' , v ) ;
+	}
+	//*/
+
+	console.log( "RNG object:" , rng ) ;
+}
+
+// Noise
+function run11() {
+	const noiseGen = new rngKit.Perlin() ;
+	noiseGen.setSeed( rng.seed ) ;
+	console.log( "Noise generator object:" , noiseGen ) ;
+
+	console.log( "\n>>> First run:" ) ;
+	for ( let x = -1 ; x <= 1  ; x += 0.25 ) {
+		for ( let y = -2 ; y <= 2  ; y += 0.25 ) {
+			let v = noiseGen.getValueAt( x , y ) ;
+			console.log( 'float at (' + x + ';' + y + '):' , v ) ;
+		}
+	}
+
+	console.log( "\n>>> Second run:" ) ;
+	for ( let x = -2 ; x <= 2  ; x += 0.25 ) {
+		for ( let y = -1 ; y <= 1  ; y += 0.25 ) {
+			let v = noiseGen.getValueAt( x , y ) ;
+			console.log( 'float at (' + x + ';' + y + '):' , v ) ;
+		}
+	}
+
+	console.log( "Noise generator object:" , noiseGen ) ;
+}
+
+run11() ;
 
